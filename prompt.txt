@@ -1,0 +1,203 @@
+🤖 AI Agent Prompt: Central Admin Dashboard
+You are an expert frontend engineer tasked with building the Central Admin Dashboard for a Crowdsourced Civic Issue Reporting & Resolution System. Product name is NagarDost
+
+🏗️ Tech Stack
+Frontend: React+Vite (TypeScript + Vite/CRA), TailwindCSS, shadcn/ui
+
+
+Map Rendering: OpenStreetMap with Leaflet.js or MapLibre GL JS
+
+
+State Management: Redux Toolkit / React Query
+
+
+Auth: AWS Cognito (JWT-based RBAC)
+
+
+Infra/CI: Deployed on AWS Amplify / S3 + CloudFront; CI/CD via GitHub Actions
+
+
+
+🎯 Requirements
+Build a responsive, role-based web dashboard with the following workloads:
+1. Operator Workflows
+Inbox View
+
+
+List of assigned/triaged reports (sortable + filterable).
+
+
+Bulk operations (acknowledge, update, reassign).
+
+
+Report Detail View
+
+
+Timeline of status changes, comments, resolution media.
+
+
+Action buttons: acknowledge, mark in-progress, resolve, close.
+
+
+Upload resolution photos/videos.
+
+
+Duplicate Handling
+
+
+Merge duplicate reports into one (with preserved audit trail).
+
+
+
+2. Supervisor Workflows
+Escalation Management
+
+
+View SLA breaches + overdue reports.
+
+
+Reassign or escalate reports to other teams.
+
+
+Team Monitoring
+
+
+Dashboard with workload distribution (team-wise).
+
+
+SLA compliance stats & alerts.
+
+
+Configuration
+
+
+Manage routing rules (geo + category → department/team).
+
+
+Define SLA profiles per issue category.
+
+
+
+3. Admin Workflows
+User & Role Management
+
+
+CRUD for users (Citizen, Operator, Supervisor, Admin).
+
+
+Assign Cognito roles + permissions.
+
+
+Category & Ward Management
+
+
+CRUD for issue categories (potholes, garbage, drainage, etc.).
+
+
+CRUD for wards/boundaries (GeoJSON-based).
+
+
+Notification Templates
+
+
+Configure SMS/Email/Push templates for system messages.
+
+
+System Settings
+
+
+Audit logs view (filterable).
+
+
+Feature flags + environment configurations.
+
+
+
+4. Shared Workloads
+Map & Discovery (via OpenStreetMap)
+
+
+Interactive city map powered by OSM (Leaflet/MapLibre).
+
+
+Issue clusters (marker clustering) and heatmaps.
+
+
+Filters: category, status, date, ward.
+
+
+GeoJSON overlays for wards/boundaries.
+
+
+Analytics & Reporting
+
+
+KPI dashboards: intake trends, hotspots, SLA compliance, resolution times.
+
+
+Exportable reports (CSV, PDF).
+
+
+Scheduled KPI email reports.
+
+
+
+5. Non-Functional Requirements
+Performance: Dashboard load ≤ 3s, P95 interactions ≤ 200ms.
+
+
+Accessibility: WCAG 2.2 AA compliance.
+
+
+Localization: English + Hindi support (i18n ready).
+
+
+Security: JWT validation, role-based access, session timeout.
+
+
+Scalability: Support 1,000+ concurrent operator sessions.
+
+
+
+6. Development & Deployment
+UI Frameworks: React + TailwindCSS + shadcn/ui + Recharts (for analytics).
+
+
+Mapping: Leaflet.js or MapLibre GL JS with OSM tiles.
+
+
+Docs & Testing: Storybook for UI components, Jest + React Testing Library.
+
+
+CI/CD: GitHub Actions pipeline → AWS Amplify / S3 + CloudFront deployment.
+
+
+
+✅ Deliverables Expected from You
+Role-based React dashboard with Operator, Supervisor, and Admin views.
+
+
+Reusable UI components (forms, tables, modals, maps, charts).
+
+
+Map integration with OpenStreetMap (clusters, heatmaps, ward overlays).
+
+
+API integration with Central API (reports, routing, analytics, admin endpoints).
+
+
+End-to-end workflows: issue triage → assignment → resolution → SLA monitoring.
+
+
+KPI dashboards + export features.
+
+
+Secure auth flow with Cognito + JWT role enforcement.
+
+
+Deployment configs (Amplify/S3+CloudFront).
+
+
+
+🎯 Your task: Generate the React codebase, UI components, and integration logic for this Central Admin Dashboard using OpenStreetMap (Leaflet/MapLibre) for geospatial features, ensuring it is scalable, accessible, and production-ready.
+
