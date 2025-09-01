@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { Report, ReportFilters, ReportStatus, PaginatedResponse } from '@/types'
+import { Report, ReportFilters, PaginatedResponse } from '@/types'
 import { reportsApi } from '@/services/reportsApi'
 
 interface ReportsState {
@@ -85,7 +85,7 @@ const reportsSlice = createSlice({
       state.currentReport = action.payload
     },
     updateReportInList: (state, action: PayloadAction<Report>) => {
-      const index = state.reports.findIndex(report => report.id === action.payload.id)
+      const index = state.reports.findIndex((report: Report) => report.id === action.payload.id)
       if (index !== -1) {
         state.reports[index] = action.payload
       }
@@ -131,7 +131,7 @@ const reportsSlice = createSlice({
       // Update report
       .addCase(updateReport.fulfilled, (state, action: PayloadAction<Report>) => {
         // Update in list
-        const index = state.reports.findIndex(report => report.id === action.payload.id)
+        const index = state.reports.findIndex((report: Report) => report.id === action.payload.id)
         if (index !== -1) {
           state.reports[index] = action.payload
         }

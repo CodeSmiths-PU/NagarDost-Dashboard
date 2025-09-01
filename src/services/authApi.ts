@@ -2,8 +2,6 @@ import apiService from './api'
 import { 
   CognitoAuthResponse, 
   AuthUser, 
-  OTPRequest, 
-  OTPVerificationRequest,
   RegistrationRequest,
   KYCVerificationRequest 
 } from '@/types'

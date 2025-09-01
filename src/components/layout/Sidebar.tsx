@@ -8,7 +8,6 @@ import {
   Map, 
   BarChart3, 
   Settings, 
-  Users, 
   Menu,
   X
 } from 'lucide-react'

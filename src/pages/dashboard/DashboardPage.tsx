@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '@/store'
+import { RootState, AppDispatch } from '@/store'
 import { fetchAnalyticsSummary } from '@/store/slices/analyticsSlice'
 import { fetchReports } from '@/store/slices/reportsSlice'
 import { 
@@ -14,9 +14,9 @@ import {
 import { formatDate } from '@/lib/utils'
 
 const DashboardPage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const { user } = useSelector((state: RootState) => state.auth)
-  const { summary, isLoading } = useSelector((state: RootState) => state.analytics)
+  const { summary } = useSelector((state: RootState) => state.analytics)
   const { reports } = useSelector((state: RootState) => state.reports)
 
   useEffect(() => {

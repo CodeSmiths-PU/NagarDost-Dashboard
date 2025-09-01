@@ -12,16 +12,8 @@ interface AdminStaffLoginResponse {
   refresh_token: string
 }
 
-interface AdminStaffRefreshRequest {
-  refresh_token: string
-}
-
 interface AdminStaffRefreshResponse {
   access_token: string
-  refresh_token: string
-}
-
-interface AdminStaffLogoutRequest {
   refresh_token: string
 }
 
