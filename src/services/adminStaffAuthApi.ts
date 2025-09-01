@@ -7,9 +7,14 @@ interface AdminStaffLoginRequest {
 }
 
 interface AdminStaffLoginResponse {
-  user: any
-  access_token: string
-  refresh_token: string
+  success: boolean
+  message: string
+  data: {
+    user: any
+    access_token: string
+    refresh_token: string
+    expires_in: number
+  }
 }
 
 interface AdminStaffRefreshResponse {

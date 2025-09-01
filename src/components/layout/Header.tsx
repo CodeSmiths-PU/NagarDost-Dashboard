@@ -14,17 +14,15 @@ import {
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { user, isAuthenticated } = useSelector((state: RootState) => state.auth)
-  const { user: adminUser, isAuthenticated: isAdminAuthenticated } = useSelector((state: RootState) => state.adminStaffAuth)
+  // const { user: adminUser, isAuthenticated: isAdminAuthenticated } = useSelector((state: RootState) => state.adminStaffAuth)
   const [showUserMenu, setShowUserMenu] = useState(false)
 
   // Determine which user is currently authenticated
-  const currentUser = isAuthenticated ? user : adminUser
+  const currentUser = isAuthenticated ? user : user
 
   const handleLogout = () => {
     if (isAuthenticated) {
       dispatch(logout())
-    } else if (isAdminAuthenticated) {
-      dispatch(logoutAdminStaff())
     }
   }
 

@@ -1,14 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { store } from '@/store'
-import { clearToken } from '@/store/slices/authSlice'
-import { clearTokens, refreshAdminStaffToken } from '@/store/slices/adminStaffAuthSlice'
 
 class ApiService {
   private api: AxiosInstance
 
   constructor() {
     this.api = axios.create({
-      baseURL: '/api',
+      baseURL: 'https://nagardost-api.sudeepmishra.com.np/api/v1',
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',
@@ -47,32 +44,20 @@ class ApiService {
       async (error) => {
         const originalRequest = error.config
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        // Don't auto-redirect for login endpoints to prevent page reloads
+        const isLoginEndpoint = originalRequest.url?.includes('/login')
+        
+        if (error.response?.status === 401 && !originalRequest._retry && !isLoginEndpoint) {
           originalRequest._retry = true
 
-          // Try to refresh admin staff token first
-          const adminStaffRefreshToken = localStorage.getItem('admin_staff_refresh_token')
-          if (adminStaffRefreshToken) {
-            try {
-              await store.dispatch(refreshAdminStaffToken()).unwrap()
-              const newToken = localStorage.getItem('admin_staff_access_token')
-              if (newToken) {
-                originalRequest.headers.Authorization = `Bearer ${newToken}`
-                return this.api(originalRequest)
-              }
-            } catch (refreshError) {
-              // If refresh fails, clear admin staff tokens
-              store.dispatch(clearTokens())
-            }
-          }
-
-          // If no admin staff token or refresh failed, try regular user token
-          const userToken = localStorage.getItem('token')
-          if (userToken) {
-            store.dispatch(clearToken())
-            window.location.href = '/login'
-          } else {
-            // No tokens available, redirect to login
+          // For non-login endpoints, clear tokens and redirect to login
+          // Token refresh will be handled by the components that need it
+          localStorage.removeItem('admin_staff_access_token')
+          localStorage.removeItem('admin_staff_refresh_token')
+          localStorage.removeItem('token')
+          
+          // Only redirect if not already on login page
+          if (window.location.pathname !== '/login') {
             window.location.href = '/login'
           }
         }

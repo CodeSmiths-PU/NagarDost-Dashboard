@@ -1,20 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RootState, AppDispatch } from '@/store'
 import { loginAdminStaff } from '@/store/slices/adminStaffAuthSlice'
-import { Lock, Eye, EyeOff, User } from 'lucide-react'
+import { Lock, Eye, EyeOff, User, AlertCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-  const { loading: adminLoading } = useSelector((state: RootState) => state.adminStaffAuth)
+  const { loading: adminLoading, error: authError } = useSelector((state: RootState) => state.adminStaffAuth)
 
   // Username password state
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPasswordField, setShowPasswordField] = useState(false)
+  const [loginError, setLoginError] = useState<string | null>(null)
+
+  // Watch for auth errors from Redux state
+  useEffect(() => {
+    if (authError) {
+      setLoginError(authError)
+    }
+  }, [authError])
+
+  // Clear error when component unmounts
+  useEffect(() => {
+    return () => {
+      setLoginError(null)
+    }
+  }, [])
 
   const handleUsernamePasswordLogin = async () => {
     if (!username || !password) {
@@ -22,15 +37,26 @@ const LoginPage = () => {
       return
     }
 
+    // Clear previous errors
+    setLoginError(null)
+
     try {
       await dispatch(loginAdminStaff({ username, password })).unwrap()
       toast.success('Login successful')
       navigate('/dashboard')
     } catch (error: any) {
-      toast.error(error.message || 'Invalid credentials')
+      // Show toast for the error
+      const errorMessage = authError || 'Invalid credentials. Please try again.'
+      toast.error(errorMessage)
     }
   }
 
+  const handleInputChange = () => {
+    // Clear error when user starts typing
+    if (loginError) {
+      setLoginError(null)
+    }
+  }
 
 
   return (
@@ -46,6 +72,14 @@ const LoginPage = () => {
 
           {/* Username Password Authentication */}
           <div className="space-y-4">
+            {/* Error Message Display */}
+            {loginError && (
+              <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                <AlertCircle className="text-destructive" size={20} />
+                <p className="text-sm text-destructive">{loginError}</p>
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Username
@@ -55,7 +89,15 @@ const LoginPage = () => {
                 <input
                   type="text"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => {
+                    setUsername(e.target.value)
+                    handleInputChange()
+                  }}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && username && password) {
+                      handleUsernamePasswordLogin()
+                    }
+                  }}
                   placeholder="Enter your username"
                   className="w-full pl-10 pr-4 py-3 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 />
@@ -71,7 +113,15 @@ const LoginPage = () => {
                 <input
                   type={showPasswordField ? 'text' : 'password'}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                    handleInputChange()
+                  }}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && username && password) {
+                      handleUsernamePasswordLogin()
+                    }
+                  }}
                   placeholder="Enter your password"
                   className="w-full pl-10 pr-12 py-3 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 />
