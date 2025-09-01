@@ -180,7 +180,7 @@ export const mockReportsApi = {
   },
 
   // Escalate report
-  escalateReport: async (id: string, reason: string): Promise<void> => {
+  escalateReport: async (id: string, _reason: string): Promise<void> => {
     await simulateApiDelay()
     
     const report = mockReports.find(r => r.id === id)

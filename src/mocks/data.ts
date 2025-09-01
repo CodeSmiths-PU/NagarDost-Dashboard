@@ -2,8 +2,6 @@ import {
   AnalyticsSummary, 
   HotspotData, 
   Report, 
-  ReportStatus, 
-  ReportPriority,
   PaginatedResponse 
 } from '@/types'
 

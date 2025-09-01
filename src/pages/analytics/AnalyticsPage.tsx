@@ -13,7 +13,7 @@ import {
 
 const AnalyticsPage = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { summary, hotspots, isLoading } = useSelector((state: RootState) => state.analytics)
+  const { summary, hotspots } = useSelector((state: RootState) => state.analytics)
 
   useEffect(() => {
     dispatch(fetchAnalyticsSummary())

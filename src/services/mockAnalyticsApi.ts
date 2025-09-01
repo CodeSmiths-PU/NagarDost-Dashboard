@@ -100,10 +100,10 @@ export const mockAnalyticsApi = {
   },
 
   // Get trends data
-  getTrends: async (metric: string, period: string): Promise<any[]> => {
+  getTrends: async (_metric: string, period: string): Promise<any[]> => {
     await simulateApiDelay()
     
-    const generateTrendData = (metric: string, period: string) => {
+    const generateTrendData = (_metric: string, period: string) => {
       const data = []
       const periods = period === 'daily' ? 30 : period === 'weekly' ? 12 : 6
       
