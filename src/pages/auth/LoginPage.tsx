@@ -43,7 +43,7 @@ const LoginPage = () => {
     try {
       await dispatch(loginAdminStaff({ username, password })).unwrap()
       toast.success('Login successful')
-      navigate('/dashboard')
+      window.location.href = '/dashboard'
     } catch (error: any) {
       // Show toast for the error
       const errorMessage = authError || 'Invalid credentials. Please try again.'

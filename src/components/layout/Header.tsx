@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, AppDispatch } from '@/store'
-import { logout } from '@/store/slices/authSlice'
 import { 
   Bell, 
   User, 
@@ -9,6 +8,7 @@ import {
   Settings,
   ChevronDown
 } from 'lucide-react'
+import { logoutAdminStaff } from '@/store/slices/adminStaffAuthSlice'
 
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -19,9 +19,12 @@ const Header = () => {
   // Determine which user is currently authenticated
   const currentUser = isAuthenticated ? user : user
 
+  console.log(currentUser)
+
   const handleLogout = () => {
     if (isAuthenticated) {
-      dispatch(logout())
+      dispatch(logoutAdminStaff())
+      // window.location.reload()
     }
   }
 
