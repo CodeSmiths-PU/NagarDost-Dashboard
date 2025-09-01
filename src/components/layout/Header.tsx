@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '@/store'
+import { RootState, AppDispatch } from '@/store'
 import { logout } from '@/store/slices/authSlice'
 import { logoutAdminStaff } from '@/store/slices/adminStaffAuthSlice'
 import { 
@@ -10,10 +10,9 @@ import {
   Settings,
   ChevronDown
 } from 'lucide-react'
-import { cn } from '@/lib/utils'
 
 const Header = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const { user, isAuthenticated } = useSelector((state: RootState) => state.auth)
   const { user: adminUser, isAuthenticated: isAdminAuthenticated } = useSelector((state: RootState) => state.adminStaffAuth)
   const [showUserMenu, setShowUserMenu] = useState(false)
