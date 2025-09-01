@@ -126,7 +126,7 @@ export const mockAnalyticsApi = {
       return data
     }
     
-    return generateTrendData(metric, period)
+    return generateTrendData(_metric, period)
   },
 
   // Get SLA breaches
