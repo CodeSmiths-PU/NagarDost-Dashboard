@@ -56,19 +56,26 @@ const DashboardPage = () => {
   ]
 
   return (
-    <div className="space-y-6">
+  <div
+    className="min-h-screen bg-fixed bg-cover bg-center bg-no-repeat bg-gray-100/60 bg-blend-overlay p-6"
+    style={{ backgroundImage: "url('/assets/background.jpg')" }}
+  >
+    <div className="space-y-6 bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-md">
       {/* Header */}
-      <div>
+      <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
         <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
         <p className="text-muted-foreground">
-          Welcome back, {user?.first_name}! Here's what's happening today.
+          Welcome back, {user?.first_name} Admin ! Here's what's happening today.
         </p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-card border border-border rounded-lg p-6">
+          <div
+            key={index}
+            className="bg-white/40 backdrop-blur-md border border-border rounded-lg p-6 shadow-sm"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
@@ -87,7 +94,7 @@ const DashboardPage = () => {
       </div>
 
       {/* Recent Reports */}
-      <div className="bg-card border border-border rounded-lg">
+      <div className="bg-white/40 backdrop-blur-md border border-border rounded-lg shadow-sm">
         <div className="p-6 border-b border-border">
           <h2 className="text-lg font-semibold text-foreground">Recent Reports</h2>
         </div>
@@ -95,7 +102,10 @@ const DashboardPage = () => {
           {reports.length > 0 ? (
             <div className="space-y-4">
               {reports.slice(0, 5).map((report) => (
-                <div key={report.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
+                <div
+                  key={report.id}
+                  className="flex items-center justify-between p-4 border border-border rounded-lg bg-white/30 backdrop-blur-sm"
+                >
                   <div className="flex items-center space-x-4">
                     <div className="p-2 bg-primary/10 rounded-full">
                       <MapPin className="h-5 w-5 text-primary" />
@@ -108,7 +118,11 @@ const DashboardPage = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(report.status)}`}>
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(
+                        report.status
+                      )}`}
+                    >
                       {report.status.replace('_', ' ')}
                     </span>
                     <p className="text-sm text-muted-foreground mt-1">
@@ -127,24 +141,24 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      {/* Quick Actions */}
+      {/* Quick Actions & System Status */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-card border border-border rounded-lg p-6">
+        <div className="bg-white/40 backdrop-blur-md border border-border rounded-lg p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h3>
           <div className="space-y-3">
-            <button className="w-full text-left p-3 border border-border rounded-lg hover:bg-muted transition-colors">
+            <button className="w-full text-left p-3 border border-border rounded-lg hover:bg-white/30 transition-colors">
               <div className="flex items-center space-x-3">
                 <FileText className="h-5 w-5 text-primary" />
                 <span>View All Reports</span>
               </div>
             </button>
-            <button className="w-full text-left p-3 border border-border rounded-lg hover:bg-muted transition-colors">
+            <button className="w-full text-left p-3 border border-border rounded-lg hover:bg-white/30 transition-colors">
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-primary" />
                 <span>Open Map View</span>
               </div>
             </button>
-            <button className="w-full text-left p-3 border border-border rounded-lg hover:bg-muted transition-colors">
+            <button className="w-full text-left p-3 border border-border rounded-lg hover:bg-white/30 transition-colors">
               <div className="flex items-center space-x-3">
                 <AlertTriangle className="h-5 w-5 text-primary" />
                 <span>View Escalations</span>
@@ -153,7 +167,7 @@ const DashboardPage = () => {
           </div>
         </div>
 
-        <div className="bg-card border border-border rounded-lg p-6">
+        <div className="bg-white/40 backdrop-blur-md border border-border rounded-lg p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-foreground mb-4">System Status</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -178,7 +192,8 @@ const DashboardPage = () => {
         </div>
       </div>
     </div>
-  )
+  </div>
+)
 }
 
 // Helper function for status colors

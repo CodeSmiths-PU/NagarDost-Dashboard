@@ -52,7 +52,12 @@ const AnalyticsPage = () => {
   ]
 
   return (
-    <div className="space-y-6">
+    <div
+    className="min-h-screen bg-fixed bg-cover bg-center bg-no-repeat bg-gray-100/60 bg-blend-overlay p-6"
+    style={{ backgroundImage: "url('/assets/background.jpg')" }}
+  >
+
+    <div  className="space-y-6 bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-md">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Analytics</h1>
         <p className="text-muted-foreground">
@@ -142,7 +147,8 @@ const AnalyticsPage = () => {
                       {count}
                     </span>
                   </div>
-                </div>
+                  </div>
+                
               ))}
             </div>
           ) : (
@@ -195,6 +201,7 @@ const AnalyticsPage = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }
