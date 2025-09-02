@@ -17,6 +17,7 @@ const Sidebar = () => {
   const dispatch = useDispatch()
   const { sidebarOpen } = useSelector((state: RootState) => state.ui)
   const { user } = useSelector((state: RootState) => state.auth)
+  console.log(user)
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: Home, roles: ['operator', 'supervisor', 'admin'] },
@@ -52,7 +53,7 @@ const Sidebar = () => {
               <h1 className="text-xl font-bold text-foreground">NagarDost</h1>
             ) : (
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">N</span>
+                {/* <span className="text-primary-foreground font-bold text-sm px-5">N</span> */}
               </div>
             )}
             <button

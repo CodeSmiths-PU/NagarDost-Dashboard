@@ -11,9 +11,9 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: null,
-  token: localStorage.getItem('token'),
-  isAuthenticated: false,
+  user: localStorage.getItem('admin_staff_user') ? JSON.parse(localStorage.getItem('admin_staff_user') || '{}') : null,
+  token: localStorage.getItem('admin_staff_access_token'),
+  isAuthenticated: localStorage.getItem('admin_staff_access_token') ? true : false,
   isLoading: false,
   error: null,
 }

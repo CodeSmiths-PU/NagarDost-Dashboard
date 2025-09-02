@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, AppDispatch } from '@/store'
-import { logout } from '@/store/slices/authSlice'
-import { logoutAdminStaff } from '@/store/slices/adminStaffAuthSlice'
 import { 
   Bell, 
   User, 
@@ -10,21 +8,23 @@ import {
   Settings,
   ChevronDown
 } from 'lucide-react'
+import { logoutAdminStaff } from '@/store/slices/adminStaffAuthSlice'
 
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { user, isAuthenticated } = useSelector((state: RootState) => state.auth)
-  const { user: adminUser, isAuthenticated: isAdminAuthenticated } = useSelector((state: RootState) => state.adminStaffAuth)
+  // const { user: adminUser, isAuthenticated: isAdminAuthenticated } = useSelector((state: RootState) => state.adminStaffAuth)
   const [showUserMenu, setShowUserMenu] = useState(false)
 
   // Determine which user is currently authenticated
-  const currentUser = isAuthenticated ? user : adminUser
+  const currentUser = isAuthenticated ? user : user
+
+  console.log(currentUser)
 
   const handleLogout = () => {
     if (isAuthenticated) {
-      dispatch(logout())
-    } else if (isAdminAuthenticated) {
       dispatch(logoutAdminStaff())
+      // window.location.reload()
     }
   }
 
@@ -52,14 +52,14 @@ const Header = () => {
             >
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                 <span className="text-primary-foreground font-medium text-sm">
-                  {currentUser?.first_name?.[0] || currentUser?.username?.[0] || currentUser?.phone?.[0] || 'U'}
+                  {currentUser?.first_name?.[0] || currentUser?.phone?.[0] || 'U'}
                 </span>
               </div>
               <div className="hidden md:block text-left">
                 <p className="text-sm font-medium text-foreground">
                   {currentUser?.first_name && currentUser?.last_name 
                     ? `${currentUser.first_name} ${currentUser.last_name}` 
-                    : currentUser?.username || 'User'}
+                    : currentUser?.phone || 'User'}
                 </p>
                 <p className="text-xs text-muted-foreground capitalize">
                   {currentUser?.role}

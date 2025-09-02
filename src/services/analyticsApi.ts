@@ -1,14 +1,22 @@
 import apiService from './api'
 import { AnalyticsSummary, HotspotData } from '@/types'
+import { shouldUseMockData } from '@/config/mock'
+import { mockAnalyticsApi } from './mockAnalyticsApi'
 
 export const analyticsApi = {
   // Get analytics summary
   getSummary: async (): Promise<AnalyticsSummary> => {
+    if (shouldUseMockData()) {
+      return mockAnalyticsApi.getSummary()
+    }
     return apiService.get<AnalyticsSummary>('/analytics/summary')
   },
 
   // Get hotspots
   getHotspots: async (): Promise<HotspotData[]> => {
+    if (shouldUseMockData()) {
+      return mockAnalyticsApi.getHotspots()
+    }
     return apiService.get<HotspotData[]>('/analytics/hotspots')
   },
 
@@ -39,11 +47,17 @@ export const analyticsApi = {
 
   // Get department performance
   getDepartmentPerformance: async (): Promise<any[]> => {
+    if (shouldUseMockData()) {
+      return mockAnalyticsApi.getDepartmentPerformance()
+    }
     return apiService.get<any[]>('/analytics/department-performance')
   },
 
   // Get operator performance
   getOperatorPerformance: async (): Promise<any[]> => {
+    if (shouldUseMockData()) {
+      return mockAnalyticsApi.getUserPerformance()
+    }
     return apiService.get<any[]>('/analytics/operator-performance')
   },
 

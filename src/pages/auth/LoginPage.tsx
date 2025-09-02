@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RootState, AppDispatch } from '@/store'
 import { loginAdminStaff } from '@/store/slices/adminStaffAuthSlice'
-import { Lock, Eye, EyeOff, User } from 'lucide-react'
+import { Lock, Eye, EyeOff, User, AlertCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 // Import the image
@@ -13,12 +13,27 @@ import NagarDostLogo from '@/assets/nagardost_logo.jpg'
 const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-  const { loading: adminLoading } = useSelector((state: RootState) => state.adminStaffAuth)
+  const { loading: adminLoading, error: authError } = useSelector((state: RootState) => state.adminStaffAuth)
 
   // Username password state
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPasswordField, setShowPasswordField] = useState(false)
+  const [loginError, setLoginError] = useState<string | null>(null)
+
+  // Watch for auth errors from Redux state
+  useEffect(() => {
+    if (authError) {
+      setLoginError(authError)
+    }
+  }, [authError])
+
+  // Clear error when component unmounts
+  useEffect(() => {
+    return () => {
+      setLoginError(null)
+    }
+  }, [])
 
   const handleUsernamePasswordLogin = async () => {
     if (!username || !password) {
@@ -26,14 +41,27 @@ const LoginPage = () => {
       return
     }
 
+    // Clear previous errors
+    setLoginError(null)
+
     try {
       await dispatch(loginAdminStaff({ username, password })).unwrap()
       toast.success('Login successful')
-      navigate('/dashboard')
+      window.location.href = '/dashboard'
     } catch (error: any) {
-      toast.error(error.message || 'Invalid credentials')
+      // Show toast for the error
+      const errorMessage = authError || 'Invalid credentials. Please try again.'
+      toast.error(errorMessage)
     }
   }
+
+  const handleInputChange = () => {
+    // Clear error when user starts typing
+    if (loginError) {
+      setLoginError(null)
+    }
+  }
+
 
   return (
     <div
