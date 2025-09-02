@@ -6,9 +6,6 @@ import { loginAdminStaff } from '@/store/slices/adminStaffAuthSlice'
 import { Lock, Eye, EyeOff, User, AlertCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
 
-// Import the image
-import NagarDostIcon from '../../assets/nagardost_icon.png'
-import NagarDostLogo from '../../assets/nagardost_logo.jpg'
 
 const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -66,14 +63,14 @@ const LoginPage = () => {
   return (
     <div
       className="min-h-screen flex flex-col relative bg-cover bg-center"
-      style={{ backgroundImage: `url(${NagarDostIcon})` }}
+      style={{ backgroundImage: `url('/assets/new_icon.png')` }}
     >
       {/* Overlay for readability */}
       {/* <div className="absolute inset-0 bg-black/40" /> */}
 
       {/* Top-left logo */}
       <div className="absolute top-7 left-10 z-10">
-        <img src={NagarDostLogo} alt="Nagar Dost Logo" className="w-40 h-40 rounded-full border border-white shadow-2xl" />
+        <img src={'/assets/nagardost_logo.jpg'} alt="Nagar Dost Logo" className="w-40 h-40 rounded-full border border-white shadow-2xl" />
       </div>
 
       {/* Center login container */}
