@@ -7,8 +7,8 @@ import { Lock, Eye, EyeOff, User, AlertCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 // Import the image
-import NagarDostIcon from '@/assets/new_icon.png'
-import NagarDostLogo from '@/assets/nagardost_logo.jpg'
+import NagarDostIcon from '../../assets/nagardost_icon.png'
+import NagarDostLogo from '../../assets/nagardost_logo.jpg'
 
 const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>()
