@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState, AppDispatch } from '@/store'
 import { fetchAnalyticsSummary } from '@/store/slices/analyticsSlice'
 import { fetchReports } from '@/store/slices/reportsSlice'
-import { 
-  FileText, 
-  Clock, 
-  CheckCircle, 
+import {
+  FileText,
+  Clock,
+  CheckCircle,
   AlertTriangle,
   TrendingUp,
   MapPin
@@ -56,158 +56,161 @@ const DashboardPage = () => {
   ]
 
   return (
-  <div
-    className="min-h-screen bg-fixed bg-cover bg-center bg-no-repeat bg-gray-100/60 bg-blend-overlay p-6"
-    style={{ backgroundImage: "url('/assets/background.jpg')" }}
-  >
-    <div className="space-y-6 bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-md">
-      {/* Header */}
-      <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
-        <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Welcome back, {user?.first_name} Admin ! Here's what's happening today.
-        </p>
-      </div>
+    <div
+      className="min-h-screen flex flex-col relative bg-no-repeat bg-center"
+      style={{
+        backgroundImage: `url('/assets/background.png')`,
+        backgroundSize: '100% 100%',
+      }}
+    >
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="p-4 bg-white/70 backdrop-blur-md rounded-lg mb-6">
+          <h1 className="text-2xl font-extrabold text-foreground">Dashboard</h1>
+          <p className="text-foreground font-semibold">
+            Welcome back, {user?.first_name} Admin! Here's what's happening today.
+          </p>
+        </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <div
-            key={index}
-            className="bg-white/40 backdrop-blur-md border border-border rounded-lg p-6 shadow-sm"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">
-                  {stat.title}
-                </p>
-                <p className="text-2xl font-bold text-foreground mt-1">
-                  {stat.value}
-                </p>
-              </div>
-              <div className={`p-3 rounded-full ${stat.bgColor}`}>
-                <stat.icon className={`h-6 w-6 ${stat.color}`} />
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="p-6 bg-white/70 backdrop-blur-md rounded-lg shadow-sm"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-foreground">
+                    {stat.title}
+                  </p>
+                  <p className="text-2xl font-extrabold text-foreground mt-1">
+                    {stat.value}
+                  </p>
+                </div>
+                <div className={`p-3 rounded-full ${stat.bgColor}`}>
+                  <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Recent Reports */}
-      <div className="bg-white/40 backdrop-blur-md border border-border rounded-lg shadow-sm">
-        <div className="p-6 border-b border-border">
-          <h2 className="text-lg font-semibold text-foreground">Recent Reports</h2>
+          ))}
         </div>
-        <div className="p-6">
-          {reports.length > 0 ? (
-            <div className="space-y-4">
-              {reports.slice(0, 5).map((report) => (
-                <div
-                  key={report.id}
-                  className="flex items-center justify-between p-4 border border-border rounded-lg bg-white/30 backdrop-blur-sm"
-                >
-                  <div className="flex items-center space-x-4">
-                    <div className="p-2 bg-primary/10 rounded-full">
-                      <MapPin className="h-5 w-5 text-primary" />
+
+        {/* Recent Reports */}
+        <div className="bg-white/70 backdrop-blur-md rounded-lg shadow-sm">
+          <div className="p-6 border-b border-border">
+            <h2 className="text-lg font-extrabold text-foreground">Recent Reports</h2>
+          </div>
+          <div className="p-6">
+            {reports.length > 0 ? (
+              <div className="space-y-4">
+                {reports.slice(0, 5).map((report) => (
+                  <div
+                    key={report.id}
+                    className="flex items-center justify-between p-4 bg-white/70 backdrop-blur-sm rounded-lg"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="p-2 bg-primary/10 rounded-full">
+                        <MapPin className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-extrabold text-foreground">{report.title}</h3>
+                        <p className="text-sm text-foreground">
+                          {report.address || 'Location not specified'}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-medium text-foreground">{report.title}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {report.address || 'Location not specified'}
+                    <div className="text-right">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold ${getStatusColor(
+                          report.status
+                        )}`}
+                      >
+                        {report.status.replace('_', ' ')}
+                      </span>
+                      <p className="text-sm text-foreground font-semibold mt-1">
+                        {formatDate(report.created_at)}
                       </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(
-                        report.status
-                      )}`}
-                    >
-                      {report.status.replace('_', ' ')}
-                    </span>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {formatDate(report.created_at)}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No reports found</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Quick Actions & System Status */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white/40 backdrop-blur-md border border-border rounded-lg p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h3>
-          <div className="space-y-3">
-            <button className="w-full text-left p-3 border border-border rounded-lg hover:bg-white/30 transition-colors">
-              <div className="flex items-center space-x-3">
-                <FileText className="h-5 w-5 text-primary" />
-                <span>View All Reports</span>
+                ))}
               </div>
-            </button>
-            <button className="w-full text-left p-3 border border-border rounded-lg hover:bg-white/30 transition-colors">
-              <div className="flex items-center space-x-3">
-                <MapPin className="h-5 w-5 text-primary" />
-                <span>Open Map View</span>
+            ) : (
+              <div className="text-center py-8">
+                <FileText className="h-12 w-12 text-foreground mx-auto mb-4" />
+                <p className="text-foreground font-semibold">No reports found</p>
               </div>
-            </button>
-            <button className="w-full text-left p-3 border border-border rounded-lg hover:bg-white/30 transition-colors">
-              <div className="flex items-center space-x-3">
-                <AlertTriangle className="h-5 w-5 text-primary" />
-                <span>View Escalations</span>
-              </div>
-            </button>
+            )}
           </div>
         </div>
 
-        <div className="bg-white/40 backdrop-blur-md border border-border rounded-lg p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-foreground mb-4">System Status</h3>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">API Status</span>
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                Online
-              </span>
+        {/* Quick Actions & System Status */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 bg-white/70 backdrop-blur-md rounded-lg shadow-sm">
+            <h3 className="text-lg font-extrabold text-foreground mb-4">Quick Actions</h3>
+            <div className="space-y-3">
+              <button className="w-full text-left p-3 hover:bg-white/10 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <FileText className="h-5 w-5 text-primary" />
+                  <span className="font-semibold">View All Reports</span>
+                </div>
+              </button>
+              <button className="w-full text-left p-3 hover:bg-white/10 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <MapPin className="h-5 w-5 text-primary" />
+                  <span className="font-semibold">Open Map View</span>
+                </div>
+              </button>
+              <button className="w-full text-left p-3 hover:bg-white/10 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <AlertTriangle className="h-5 w-5 text-primary" />
+                  <span className="font-semibold">View Escalations</span>
+                </div>
+              </button>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Database</span>
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                Connected
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Storage</span>
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                Available
-              </span>
+          </div>
+
+          <div className="p-6 bg-white/70 backdrop-blur-md rounded-lg shadow-sm">
+            <h3 className="text-lg font-extrabold text-foreground mb-4">System Status</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-foreground font-semibold">API Status</span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-green-200 text-green-900">
+                  Online
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-foreground font-semibold">Database</span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-green-200 text-green-900">
+                  Connected
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-foreground font-semibold">Storage</span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-green-200 text-green-900">
+                  Available
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-)
+  )
 }
 
 // Helper function for status colors
 const getStatusColor = (status: string) => {
   const colors = {
-    pending: 'bg-yellow-100 text-yellow-800',
-    assigned: 'bg-blue-100 text-blue-800',
-    in_progress: 'bg-orange-100 text-orange-800',
-    resolved: 'bg-green-100 text-green-800',
-    closed: 'bg-gray-100 text-gray-800',
-    rejected: 'bg-red-100 text-red-800',
-    duplicate: 'bg-purple-100 text-purple-800',
+    pending: 'bg-yellow-200 text-yellow-900 font-extrabold',
+    assigned: 'bg-blue-200 text-blue-900 font-extrabold',
+    in_progress: 'bg-orange-200 text-orange-900 font-extrabold',
+    resolved: 'bg-green-200 text-green-900 font-extrabold',
+    closed: 'bg-gray-200 text-gray-900 font-extrabold',
+    rejected: 'bg-red-200 text-red-900 font-extrabold',
+    duplicate: 'bg-purple-200 text-purple-900 font-extrabold',
   }
-  return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-800'
+  return colors[status as keyof typeof colors] || 'bg-gray-200 text-gray-900 font-extrabold'
 }
 
 export default DashboardPage

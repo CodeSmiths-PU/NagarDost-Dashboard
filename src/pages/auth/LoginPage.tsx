@@ -62,15 +62,18 @@ const LoginPage = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col relative bg-cover bg-center"
-      style={{ backgroundImage: `url('/assets/new_icon.png')` }}
+      className="min-h-screen flex flex-col relative bg-no-repeat bg-center"
+      style={{
+        backgroundImage: `url('/assets/indianmap_login.png')`,
+        backgroundSize: '100% 100%',
+      }}
     >
       {/* Overlay for readability */}
       {/* <div className="absolute inset-0 bg-black/40" /> */}
 
       {/* Top-left logo */}
       <div className="absolute top-7 left-10 z-10">
-        <img src={'/assets/nagardost_logo.jpg'} alt="Nagar Dost Logo" className="w-40 h-40 rounded-full border border-white shadow-2xl" />
+        <img src={'/assets/nagardost_logo.jpg'} alt="Nagar Dost Logo" className="w-20 h-20 rounded-full border border-white shadow-2xl" />
       </div>
 
       {/* Center login container */}

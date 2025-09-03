@@ -2,10 +2,13 @@ import { FileText } from 'lucide-react'
 
 const ReportsPage = () => {
   return (
-    <div
-    className="min-h-screen bg-fixed bg-cover bg-center bg-no-repeat bg-gray-100/60 bg-blend-overlay p-6"
-    style={{ backgroundImage: "url('/assets/background.jpg')" }}
-  >
+<div
+      className="min-h-screen flex flex-col relative bg-no-repeat bg-center"
+      style={{
+        backgroundImage: `url('/assets/background.png')`,
+        backgroundSize: '100% 100%',
+      }}
+    >
 
     <div  className="space-y-6 bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-md">
       <div>
