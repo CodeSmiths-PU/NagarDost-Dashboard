@@ -15,6 +15,7 @@ import {
   RefreshCw
 } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
+import { ReportStatus } from '@/types'
 
 const ReportsPage = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -39,7 +40,7 @@ const ReportsPage = () => {
     setStatusFilter(status)
     dispatch(setFilters({ 
       ...filters, 
-      status: status || undefined,
+      status: status as ReportStatus || undefined,
       page: 1 
     }))
   }
