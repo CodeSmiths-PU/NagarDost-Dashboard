@@ -9,7 +9,8 @@ import {
   CheckCircle, 
   AlertTriangle,
   TrendingUp,
-  MapPin
+  MapPin,
+  RefreshCw
 } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 
@@ -17,12 +18,17 @@ const DashboardPage = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { user } = useSelector((state: RootState) => state.auth)
   const { summary } = useSelector((state: RootState) => state.analytics)
-  const { reports } = useSelector((state: RootState) => state.reports)
+  const { reports, isLoading } = useSelector((state: RootState) => state.reports)
 
   useEffect(() => {
     dispatch(fetchAnalyticsSummary())
     dispatch(fetchReports({ page: 1, limit: 5 }))
   }, [dispatch])
+
+  const handleRefresh = () => {
+    dispatch(fetchAnalyticsSummary())
+    dispatch(fetchReports({ page: 1, limit: 5 }))
+  }
 
   const stats = [
     {
@@ -89,7 +95,17 @@ const DashboardPage = () => {
       {/* Recent Reports */}
       <div className="bg-card border border-border rounded-lg">
         <div className="p-6 border-b border-border">
-          <h2 className="text-lg font-semibold text-foreground">Recent Reports</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-foreground">Recent Reports</h2>
+            <button
+              onClick={handleRefresh}
+              disabled={isLoading}
+              className="flex items-center space-x-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+              <span>Refresh</span>
+            </button>
+          </div>
         </div>
         <div className="p-6">
           {reports.length > 0 ? (

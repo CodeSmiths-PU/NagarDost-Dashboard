@@ -12,9 +12,9 @@ import { mockReportsApi } from './mockReportsApi'
 export const reportsApi = {
   // Get all reports with filters
   getReports: async (filters: ReportFilters): Promise<PaginatedResponse<Report>> => {
-    if (shouldUseMockData()) {
-      return mockReportsApi.getReports(filters)
-    }
+    // if (shouldUseMockData() || false) {
+    //   return mockReportsApi.getReports(filters)
+    // }
     
     const params = new URLSearchParams()
     
