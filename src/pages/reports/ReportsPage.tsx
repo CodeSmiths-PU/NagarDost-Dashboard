@@ -64,7 +64,15 @@ const ReportsPage = () => {
   ]
 
   return (
-    <div className="space-y-6">
+<div
+      className="min-h-screen flex flex-col relative bg-no-repeat bg-center"
+      style={{
+        backgroundImage: `url('/assets/background.png')`,
+        backgroundSize: '100% 100%',
+      }}
+    >
+
+    <div  className="space-y-6 bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-md">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Reports</h1>
         <p className="text-muted-foreground">
@@ -209,6 +217,7 @@ const ReportsPage = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   )
 }
